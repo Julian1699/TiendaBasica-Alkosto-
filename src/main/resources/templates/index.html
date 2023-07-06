@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:xmls="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>ALKOSTO</title>
+    <style>
+        .navbar-brand {
+            background-color: #FF7000;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #3300FF;">
+    <a class="navbar-brand d-flex justify-content-center align-items-center" href="/" style="width: 100%; height: 100%;">ALKOSTO</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
+</nav>
+</body>
+
+<div class="container">
+    <div th:if="${success != null}"
+         class="alert alert-primary alert-dismissible fade show">
+        [[${success}]]>
+        <button type="button" class="close" data-dismiss="alert"
+                aria-label="Close"></button>
+    </div>
+</div>
+
+<div class="container">
+    <div th:if="${error != null}"
+         class="alert alert-danger alert-dismissible fade show">
+        [[${error}]]>
+        <button type="button" class="close" data-dismiss="alert"
+                aria-label="Close"></button>
+    </div>
+</div>
+
+<div class="container">
+    <div th:if="${warning != null}"
+         class="alert alert-warning alert-dismissible fade show">
+        [[${warning}]]>
+        <button type="button" class="close" data-dismiss="alert"
+                aria-label="Close"></button>
+    </div>
+</div>
+
+<div class="container">
+    <div th:if="${info != null}"
+         class="alert alert-info alert-dismissible fade show">
+        [[${info}]]>
+        <button type="button" class="close" data-dismiss="alert"
+                aria-label="Close"></button>
+    </div>
+</div>
+
+<!-- A PARTIR DE ESTA LINEA DE CODIGO SE INTRODUCE TODO LO REFERENTE A LOS PRODUCTOS. -->
+
+<br>
+<div class="container text-center">
+    <div class="d-flex justify-content-center">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="btn btn-primary" href="/new_product">Agregar Producto</a>
+                &nbsp;&nbsp;
+                <a class="btn btn-info" href="/">Listar Productos</a></li>
+        </ul>
+
+        <FORM class="form-inline" th:action="@{/}">
+            <div class="form-group mb-2">
+                <label>Filtrar : </label>
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" name="palabraClave" class="form-control" id="palabraClave" th:value="${palabraClave}"
+                       placeholder="Digite el valor a buscar" required>
+            </div>
+            <input type="submit" class="btn btn-info mb-2" value="Buscar">
+            &nbsp;&nbsp;
+            <a type="submit" class="btn btn-secondary mb-2" href="/">Limpiar</a>
+        </form>
+    </div>
+
+    <br>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Referencia</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Peso</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Fecha</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="producto : ${listProductos} ">
+            <td th:text="${producto.Id}"></td>
+            <td th:text="${producto.Nombre}"></td>
+            <td th:text="${producto.Referencia}"></td>
+            <td th:text="${producto.Precio}"></td>
+            <td th:text="${producto.Peso}"></td>
+            <td th:text="${producto.Categoria}"></td>
+            <td th:text="${producto.Stock}"></td>
+            <td th:text="${producto.Fecha}"></td>
+            <td>
+                <a class="btn btn-primary" th:href="@{'/update_product/'+${producto.id}}">Editar</a>
+                &nbsp;
+                <a class="btn btn-info" th:href="@{'/details_producto/'+${producto.id}}">Detalles</a>
+                &nbsp;
+                <a class="btn btn-danger" th:href="@{'/delete_product/'+${producto.id}}"
+                   onclick="return confirm('¿Seguro querés eliminar esto?');">Eliminar</a>
+                &nbsp;
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+
+</html>
