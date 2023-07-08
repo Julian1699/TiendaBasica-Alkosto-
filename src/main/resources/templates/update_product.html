@@ -51,6 +51,19 @@
                         <input type="text" name="categoria" th:field="*{categoria}"
                                class="form-control" placeholder="Digite la categoria" required>
                     </div>
+                    <div class="form-group">
+                        <label>Stock :</label>
+                        <input type="text" name="stock" th:field="*{stock}"
+                               class="form-control" placeholder="Digite el numero de productos" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de creacion del producto :</label>
+                        <input type="text" name="fecha" th:field="*{fecha}" class="form-control">
+                        <br/><br/>
+                        <script type="text/javascript">
+                            document.getElementById("fecha").value = new Date().toISOString().slice(0, 10);
+                        </script>
+                    </div>
                     <div class="box-footer">
                         <button class="btn btn-success">Actualizar</button>
                         &nbsp;&nbsp;
