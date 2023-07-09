@@ -3,10 +3,8 @@ package com.prueba.shop.controller;
 
 import com.prueba.shop.entity.Producto;
 import com.prueba.shop.entity.Venta;
-import com.prueba.shop.repository.ProductoRepository;
 import com.prueba.shop.service.ProductoService;
 import com.prueba.shop.service.VentaService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -17,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@Slf4j
 public class ProductoController {
 
     //Todo lo relacionado a los productos
@@ -55,6 +52,7 @@ public class ProductoController {
         productoService.deleteProducto(id);
         return "redirect:/";
     }
+
     //Todo lo relacionado a las ventas
     @GetMapping("/buy_product/{id}")
     public String buyProduct(@PathVariable(name = "id") Long id, Model model){
@@ -62,26 +60,24 @@ public class ProductoController {
         model.addAttribute("producto", producto);
         return "buy_Product";
     }
-
-
     @PostMapping("/make_purchase")
-    public String makeCompra(Producto producto) {
+    public String makeCompra(@RequestParam("id") Long id, Producto producto) {
 
-        log.info("Producto a comprar...");
-        log.info(producto.toString());
         producto.setStock( producto.getStock() - 1 );
+        productoService.getById(id);
         productoService.saveProducto(producto);
 
-        log.info("Guardando venta...");
         Venta nuevaVenta = new Venta();
+
         nuevaVenta.setNombre(producto.getNombre());
         nuevaVenta.setPeso(producto.getPeso());
         nuevaVenta.setPrecio(producto.getPrecio());
         nuevaVenta.setReferencia(producto.getReferencia());
+        nuevaVenta.setProducto(producto);
 
-        log.info(nuevaVenta.toString());
         ventaService.save(nuevaVenta);
 
         return "redirect:/";
     }
+
 }

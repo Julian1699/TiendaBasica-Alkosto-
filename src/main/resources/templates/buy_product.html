@@ -36,6 +36,7 @@
                             <label>Id :</label>
                             <input type="text" name="id" th:field="*{id}" class="form-control" readonly="readonly">
                         </div>
+                        <input type="hidden" name="producto_id" th:value="${producto.id}">
                         <div class="form-group">
                             <label>Nombre del producto :</label>
                             <input type="text" name="nombre" th:field="*{nombre}" class="form-control" readonly="readonly">

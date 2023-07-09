@@ -19,8 +19,8 @@ public class Venta {
     private double precio;
     @Column(name = "peso", nullable = false)
     private double peso;
-    @ManyToOne
-    @JoinColumn(name = "producto_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "producto_id", referencedColumnName = "id")
     private Producto producto;
 
 }
