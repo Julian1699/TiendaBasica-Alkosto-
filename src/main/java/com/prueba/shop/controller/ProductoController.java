@@ -49,6 +49,14 @@ public class ProductoController {
     }
     @GetMapping("/delete_product/{id}")
     public String deleteProduct(@PathVariable(name = "id") long id) {
+        // Obtener el producto a eliminar
+        Producto producto = productoService.getById(id);
+        // Obtener las ventas asociadas al producto
+        List<Venta> ventasAsociadas = producto.getVentas();
+        // Establecer el atributo "producto" de las ventas asociadas a null
+        for (Venta venta : ventasAsociadas) {
+            venta.setProducto(null);
+        }
         productoService.deleteProducto(id);
         return "redirect:/";
     }

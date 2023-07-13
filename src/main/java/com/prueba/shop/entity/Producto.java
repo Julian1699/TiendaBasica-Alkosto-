@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -32,5 +33,7 @@ public class Producto {
     @NotEmpty
     @Column(name = "fecha_creacion", nullable = false)
     private String fecha;
+    @OneToMany(mappedBy = "producto")
+    private List<Venta> ventas;
 
 }
